@@ -12,5 +12,6 @@ div.slide > table > tbody > tr > td { vertical-align: middle;
 div.slide table { margin-left: auto; margin-right: auto; }
 h1 { font-size: 60px; }
 pre, .literal { font-family: Inconsolata; }
-pre.literal-block, pre.doctest-block { text-align: left; font-size: 36px; }
+pre.literal-block, pre.doctest-block { text-align: left; font-size: 30px; }
 div.slide ul { text-align: left; margin-left: 1em; color: #700; }
+input { font-size: 44px; }
