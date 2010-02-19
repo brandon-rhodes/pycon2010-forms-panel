@@ -67,6 +67,22 @@ untitled
      <input type="submit" name="Create Account" />
    </form>
 
+
+A SqlA base class for FA and Sprox
+----------------------------------
+
+untitled
+--------
+
+::
+
+    class User(DeclarativeBase):
+        __tablename__ = 'users'
+
+        user_name = Column(Unicode(16), unique=True,
+                           primary_key=True)
+        password = Column('password', Unicode(40))
+
 FormAlchemy
 -----------
 
@@ -179,18 +195,6 @@ untitled
 
 Sprox
 -----
-
-untitled
---------
-
-::
-
-    class User(DeclarativeBase):
-        __tablename__ = 'users'
-
-        user_name = Column(Unicode(16), unique=True,
-                           primary_key=True)
-        password = Column('password', Unicode(40))
 
 untitled
 --------
