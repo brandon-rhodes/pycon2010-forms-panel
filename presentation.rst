@@ -79,8 +79,7 @@ untitled
     class User(DeclarativeBase):
         __tablename__ = 'users'
 
-        user_name = Column(Unicode(16), unique=True,
-                           primary_key=True)
+        user_name = Column(Unicode(16), unique=True, primary_key=True)
         password = Column('password', Unicode(40))
 
 FormAlchemy
@@ -89,24 +88,44 @@ FormAlchemy
 untitled
 --------
 
+| First, we start with the User class
+| and append a second password field
+
+untitled
+--------
+
 ::
 
- def page(request):
-   fs = FieldSet(Basic)
-   questions = [(normalize_name(q), q)
-                in get_questions(request)]
-   for name, label in questions :
-     fs.append(Field(name, label=label))
- 
-   fs = fs.bind(data=request.POST or None)
-   if request.POST and fs.validate():
-     fs.sync()
-     for name, label in questions:
-       field = fs[name]
-       save_question(request, label, field.value)
-     redirect('/')
-   return ('<form>%s<input type="submit" /></form>'
-           % fs.render())
+    fs = FieldSet(User)
+    fs.append(Field('password2').label('Repeat password'))
+
+    def validate_password(value, field):
+	if value != field.parent.password.value:
+	    raise ValidationError('Passwords do not match')
+
+    fs.email.set(validate=validate_password) 
+
+untitled
+--------
+
+| To add the dynamic fields,
+| we override simply use append again
+
+untitled
+--------
+
+::
+
+    fs = FieldSet(User)
+    fs.append(Field('password2'))
+    for i, question in enumerate(get_questions(request)):
+	fs.append(Field('custom_%s' % i).label(question))
+
+    def validate_password(value, field):
+	if value != field.parent.password.value:
+	    raise ValidationError('Passwords do not match')
+
+    fs.email.set(validate=validate_password) 
 
 Django
 ------
