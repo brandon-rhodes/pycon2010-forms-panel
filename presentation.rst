@@ -79,7 +79,8 @@ untitled
     class User(DeclarativeBase):
         __tablename__ = 'users'
 
-        user_name = Column(Unicode(16), unique=True, primary_key=True)
+        user_name = Column(Unicode(16), unique=True,
+                           primary_key=True)
         password = Column('password', Unicode(40))
 
 FormAlchemy
